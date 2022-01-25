@@ -24,7 +24,7 @@ t_node	*create_node(int val, int ini)
 		return (NULL);
 	ret->val = val;
 	ret->ini = ini;
-	ret->ord = -1;
+	ret->ord = 0;
 	return (ret);
 }
 
@@ -36,7 +36,7 @@ void	raise_error(int errcode)
 
 void	incr_order(t_list *node)
 {
-	if (!node)
+	if (!node->next)
 		return ;
 	t_node	*c;
 	t_node	*n;
@@ -54,7 +54,6 @@ void	ins_node(t_list **lst, t_list *new, t_list *prev, t_list *curr)
 	else
 		prev->next = new;
 	new->next = curr;
-	//incr_order(curr);
 }
 
 void	lstadd_sort(t_list **lst, t_node *node)
@@ -63,16 +62,13 @@ void	lstadd_sort(t_list **lst, t_node *node)
 	t_list	*curr;
 	t_list	*prev;
 	t_list	*new;
-	int		i;
 
 	curr = *lst;
 	new = ft_lstnew(node);
 	prev = NULL;
-	i = 0;
 	while (curr)
 	{
 		curr_node = (t_node *)curr->content;
-		curr_node->ord = i++;
 		if (node->val == curr_node->val)
 			raise_error(1);
 		else if (node->val < curr_node->val)
@@ -89,7 +85,9 @@ void	pval(void *node)
 	n = (t_node *)node;
 	ft_putnbr_fd(n->val, 1);
 	ft_putchar_fd('\t', 1);
+	ft_putchar_fd('\t', 1);
 	ft_putnbr_fd(n->ini, 1);
+	ft_putchar_fd('\t', 1);
 	ft_putchar_fd('\t', 1);
 	ft_putnbr_fd(n->ord, 1);
 	ft_putchar_fd('\n', 1);
@@ -104,7 +102,8 @@ int	main(int argc, char **argv)
 	in = ft_lstnew(create_node(ft_atoi(argv[i]), i - 1));
 	while(++i < argc)
 		lstadd_sort(&in, create_node(ft_atoi(argv[i]), i - 1));
-	ft_putstr_fd("Value\tInit\tOrder\n", 1);
+	ft_putstr_fd("Value\t\tInit\t\tOrder\n", 1);
+	incr_order(in);
 	ft_lstiter(in, *pval);
 	return (0);
 }
