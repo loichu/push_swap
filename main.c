@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "libft/libft.h"
 
 typedef	struct s_node
@@ -8,6 +9,11 @@ typedef	struct s_node
 	int	ini;
 	int	ord;
 }	t_node;
+
+void	del_node(t_node *node)
+{
+	free(node);
+}
 
 t_node	*create_node(int val, int ini)
 {
@@ -20,6 +26,41 @@ t_node	*create_node(int val, int ini)
 	ret->ini = ini;
 	ret->ord = -1;
 	return (ret);
+}
+
+void	raise_error(int errcode)
+{
+	ft_putstr_fd("Error\n", 1);
+	exit(errcode);
+}
+
+void	lstadd_sort(t_list **lst, t_node *node)
+{
+	t_list	*curr;	
+	t_list	*prev;
+	t_list	*new;
+
+	curr = *lst;
+	new = ft_lstnew(node);
+	prev = NULL;
+	while (curr)
+	{
+		if (node->val == curr->content->val)
+			raise_error(1);
+		else if (node->val < curr->content->val)
+		{
+			if (prev)
+				prev->next = new;
+			new->next = curr;
+			curr = new;
+			if (!prev)
+				*lst = curr;	
+			return ;
+		}
+		prev = lst;
+		lst = lst->next;
+	}
+	prev->next = new;
 }
 
 void	pval(void *node)
