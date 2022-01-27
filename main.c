@@ -129,19 +129,18 @@ void	divide(t_stack **a, t_stack **b, int med)
 
 	printf("DIVIDE\n");
 	start = NULL;
-	while (next)
+	while (1)
 	{
-		next = (*a)->next;
-		if ((*a)->val > med)
-		{
-			(*a)->next = *b;
-			*b = *a;
-		}
+		if (*a == start)
+			break ;
+		if ((*a)->val < med)
+			push('b', b, a);
 		else
 		{
-			stk_add_back(a, *a);
+			if (!start)
+				start = *a;
+			rotate('a', a);
 		}
-		//*a = next;
 	}
 }
 
@@ -169,27 +168,27 @@ int	main(int argc, char **argv)
 		lstadd_sort(&in, create_node(ft_atoi(argv[i]), i - 1));
 		stk_add_back(&stack_a, stk_new(ft_atoi(argv[i])));
 	}
-	med = ((t_node *)stackget(in, (i - 1) / 2)->content)->val;
+	med = ((t_node *)stackget(in, (argc - 1) / 2)->content)->val;
 	ft_putnbr_fd(med, 1);
 	ft_putchar_fd('\n', 1);
 	ft_putstr_fd("Value\t\tInit\t\tOrder\n", 1);
 	incr_order(in);
 	ft_lstiter(in, pval);
 	pstacks(stack_a, stack_b);
-	//divide(&stack_a, &stack_b, med);
-	rotate('b', &stack_b);
-	pstacks(stack_a, stack_b);
-	push('a', &stack_a, &stack_b);
-	push('b', &stack_b, &stack_a);
-	pstacks(stack_a, stack_b);
-	rotate('a', &stack_a);
-	pstacks(stack_a, stack_b);
-	reverse('a', &stack_a);
-	pstacks(stack_a, stack_b);
-	reverse('b', &stack_b);
-	rotate('b', &stack_b);
-	pstacks(stack_a, stack_b);
-	push('a', &stack_a, &stack_b);
+	divide(&stack_a, &stack_b, med);
+	//rotate('b', &stack_b);
+	//pstacks(stack_a, stack_b);
+	//push('a', &stack_a, &stack_b);
+	//push('b', &stack_b, &stack_a);
+	//pstacks(stack_a, stack_b);
+	//rotate('a', &stack_a);
+	//pstacks(stack_a, stack_b);
+	//reverse('a', &stack_a);
+	//pstacks(stack_a, stack_b);
+	//reverse('b', &stack_b);
+	//rotate('b', &stack_b);
+	//pstacks(stack_a, stack_b);
+	//push('a', &stack_a, &stack_b);
 	pstacks(stack_a, stack_b);
 	return (0);
 }
