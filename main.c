@@ -176,19 +176,6 @@ int	main(int argc, char **argv)
 	ft_lstiter(in, pval);
 	pstacks(stack_a, stack_b);
 	divide(&stack_a, &stack_b, med);
-	//rotate('b', &stack_b);
-	//pstacks(stack_a, stack_b);
-	//push('a', &stack_a, &stack_b);
-	//push('b', &stack_b, &stack_a);
-	//pstacks(stack_a, stack_b);
-	//rotate('a', &stack_a);
-	//pstacks(stack_a, stack_b);
-	//reverse('a', &stack_a);
-	//pstacks(stack_a, stack_b);
-	//reverse('b', &stack_b);
-	//rotate('b', &stack_b);
-	//pstacks(stack_a, stack_b);
-	//push('a', &stack_a, &stack_b);
 	pstacks(stack_a, stack_b);
 	return (0);
 }
