@@ -1,3 +1,4 @@
+// vim: ts=4:sw=4
 #include "push_swap.h"
 
 typedef	struct s_node
@@ -92,8 +93,8 @@ void	pval(void *node)
 
 void	pstacks(t_stack *a, t_stack *b)
 {
-	ft_putstr_fd("Stack A\t\t\tStack B\n", 1);	
-	ft_putstr_fd("-------\t\t\t-------\n", 1);	
+	ft_putstr_fd("Stack A\t\tStack B\n", 1);	
+	ft_putstr_fd("-------\t\t-------\n", 1);	
 	while (a || b)
 	{
 		if (a)
@@ -111,27 +112,44 @@ void	pstacks(t_stack *a, t_stack *b)
 	}
 }
 
-void	sort(t_stack *a, t_stack *b, int med)
-{
-	bool	sorted;
-
-	sorted = false;
-	while (!sorted)
-	{
-		sorted = true;
-	}
-}
+//void	sort(t_stack *a, t_stack *b, int med)
+//{
+//	bool	sorted;
+//
+//	sorted = false;
+//	while (!sorted)
+//	{
+//		sorted = true;
+//	}
+//}
 
 void	divide(t_stack **a, t_stack **b, int med)
 {
-	t_stack i;
+	t_stack *start;
 
-	i = *a;
-	while (i)
+	printf("DIVIDE\n");
+	start = NULL;
+	while (next)
 	{
-		if (i->val > )	
-		i = i->next;
+		next = (*a)->next;
+		if ((*a)->val > med)
+		{
+			(*a)->next = *b;
+			*b = *a;
+		}
+		else
+		{
+			stk_add_back(a, *a);
+		}
+		//*a = next;
 	}
+}
+
+t_list	*stackget(t_list *lst, int index)
+{
+	while(index--)
+		lst = lst->next;
+	return lst;
 }
 
 int	main(int argc, char **argv)
@@ -151,10 +169,27 @@ int	main(int argc, char **argv)
 		lstadd_sort(&in, create_node(ft_atoi(argv[i]), i - 1));
 		stk_add_back(&stack_a, stk_new(ft_atoi(argv[i])));
 	}
-	med = i / 2;
+	med = ((t_node *)stackget(in, (i - 1) / 2)->content)->val;
+	ft_putnbr_fd(med, 1);
+	ft_putchar_fd('\n', 1);
 	ft_putstr_fd("Value\t\tInit\t\tOrder\n", 1);
 	incr_order(in);
-	ft_lstiter(in, *pval);
+	ft_lstiter(in, pval);
+	pstacks(stack_a, stack_b);
+	//divide(&stack_a, &stack_b, med);
+	rotate('b', &stack_b);
+	pstacks(stack_a, stack_b);
+	push('a', &stack_a, &stack_b);
+	push('b', &stack_b, &stack_a);
+	pstacks(stack_a, stack_b);
+	rotate('a', &stack_a);
+	pstacks(stack_a, stack_b);
+	reverse('a', &stack_a);
+	pstacks(stack_a, stack_b);
+	reverse('b', &stack_b);
+	rotate('b', &stack_b);
+	pstacks(stack_a, stack_b);
+	push('a', &stack_a, &stack_b);
 	pstacks(stack_a, stack_b);
 	return (0);
 }
