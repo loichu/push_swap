@@ -112,16 +112,58 @@ void	pstacks(t_stack *a, t_stack *b)
 	}
 }
 
-//void	sort(t_stack *a, t_stack *b, int med)
-//{
-//	bool	sorted;
-//
-//	sorted = false;
-//	while (!sorted)
-//	{
-//		sorted = true;
-//	}
-//}
+bool	check_order(int dir, t_stack *stk)
+{
+	while (stk->next)
+	{
+		printf("curr: %i\tnext: %i\n", stk->val, stk->next->val);
+		if (dir > 0)
+		{
+			if (stk->val > stk->next->val)
+				return false;
+		}
+		else
+		{
+			if (stk->val < stk->next->val)
+				return false;
+		}
+		stk = stk->next;
+	}
+	return true;
+}
+
+void	sort(t_stack **a, t_stack **b)
+{
+	bool	a_sorted;
+	bool	b_sorted;
+	bool	sa;
+	bool	sb;
+
+	a_sorted = check_order(1, *a);
+	b_sorted = check_order(-1, *b);
+	while (!(a_sorted && b_sorted))
+	{
+		printf("a: %i\tb: %i\n", a_sorted, b_sorted);
+		pstacks(*a, *b);
+		sa = (*a)->val > (*a)->next->val;
+		sb = (*b)->val < (*b)->next->val;
+		if (sa && sb)
+			ss(a, b);
+		else if (sa)
+			s('a', a);
+		else if (sb)
+			s('b', b);
+		pstacks(*a, *b);
+		a_sorted = check_order(1, *a);
+		b_sorted = check_order(-1, *b);
+		if (!(a_sorted || b_sorted))
+			rr(a, b);
+		else if (!a_sorted)
+			r('a', a);
+		else if (!b_sorted)
+			r('b', b);
+	}
+}
 
 void	divide(t_stack **a, t_stack **b, int med)
 {
@@ -139,7 +181,7 @@ void	divide(t_stack **a, t_stack **b, int med)
 		{
 			if (!start)
 				start = *a;
-			rotate('a', a);
+			r('a', a);
 		}
 	}
 }
@@ -176,6 +218,10 @@ int	main(int argc, char **argv)
 	ft_lstiter(in, pval);
 	pstacks(stack_a, stack_b);
 	divide(&stack_a, &stack_b, med);
+	pstacks(stack_a, stack_b);
+	//s('a', &stack_a);
+	//rr(&stack_a, &stack_b);
+	sort(&stack_a, &stack_b);
 	pstacks(stack_a, stack_b);
 	return (0);
 }
