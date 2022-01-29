@@ -93,8 +93,8 @@ void	pval(void *node)
 
 void	pstacks(t_stack *a, t_stack *b)
 {
-	ft_putstr_fd("Stack A\t\tStack B\n", 1);	
-	ft_putstr_fd("-------\t\t-------\n", 1);	
+	ft_putstr_fd("Stack A\t\tStack B\n", 1);
+	ft_putstr_fd("-------\t\t-------\n", 1);
 	while (a || b)
 	{
 		if (a)
@@ -116,14 +116,16 @@ bool	check_order(int dir, t_stack *stk)
 {
 	while (stk->next)
 	{
-		printf("curr: %i\tnext: %i\n", stk->val, stk->next->val);
+		//printf("curr: %i\tnext: %i\n", stk->val, stk->next->val);
 		if (dir > 0)
 		{
+			//printf("1\n");
 			if (stk->val > stk->next->val)
 				return false;
 		}
 		else
 		{
+			//printf("2\n");
 			if (stk->val < stk->next->val)
 				return false;
 		}
@@ -132,28 +134,33 @@ bool	check_order(int dir, t_stack *stk)
 	return true;
 }
 
-void	sort(t_stack **a, t_stack **b)
+void	sort(t_stack **a, t_stack **b, int a_frst, int b_frst)
 {
 	bool	a_sorted;
 	bool	b_sorted;
 	bool	sa;
 	bool	sb;
 
+	//
+	//printf("SORT\n");
 	a_sorted = check_order(1, *a);
 	b_sorted = check_order(-1, *b);
+	//printf("SORT\n");
 	while (!(a_sorted && b_sorted))
 	{
-		printf("a: %i\tb: %i\n", a_sorted, b_sorted);
-		pstacks(*a, *b);
-		sa = (*a)->val > (*a)->next->val;
-		sb = (*b)->val < (*b)->next->val;
+		//printf("a: %i\tb: %i\n", a_sorted, b_sorted);
+		//printf("a_frst: %i\tb_frst: %i\n", a_frst, b_frst);
+		//pstacks(*a, *b);
+		//printf("sort");
+		sa = ((*a)->next && (*a)->next->val != a_frst) && ((*a)->val > (*a)->next->val);
+		sb = ((*b)->next && (*b)->next->val != b_frst) && ((*b)->val < (*b)->next->val);
 		if (sa && sb)
 			ss(a, b);
 		else if (sa)
 			s('a', a);
 		else if (sb)
 			s('b', b);
-		pstacks(*a, *b);
+		//pstacks(*a, *b);
 		a_sorted = check_order(1, *a);
 		b_sorted = check_order(-1, *b);
 		if (!(a_sorted || b_sorted))
@@ -162,6 +169,8 @@ void	sort(t_stack **a, t_stack **b)
 			r('a', a);
 		else if (!b_sorted)
 			r('b', b);
+		else
+			return ;
 	}
 }
 
@@ -169,10 +178,11 @@ void	divide(t_stack **a, t_stack **b, int med)
 {
 	t_stack *start;
 
-	printf("DIVIDE\n");
+	//printf("DIVIDE\n");
 	start = NULL;
 	while (1)
 	{
+		//printf("divide\n");
 		if (*a == start)
 			break ;
 		if ((*a)->val < med)
@@ -183,7 +193,14 @@ void	divide(t_stack **a, t_stack **b, int med)
 				start = *a;
 			r('a', a);
 		}
+		//printf("divide\n");
 	}
+}
+
+void	unify(t_stack **a, t_stack **b)
+{
+	while (*b)
+		push('a', a, b);
 }
 
 t_list	*stackget(t_list *lst, int index)
@@ -201,6 +218,7 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 
+	//printf("hello\n");
 	i = 1;
 	in = ft_lstnew(create_node(ft_atoi(argv[i]), i - 1));
 	stack_a = stk_new(ft_atoi(argv[i]));
@@ -211,17 +229,23 @@ int	main(int argc, char **argv)
 		stk_add_back(&stack_a, stk_new(ft_atoi(argv[i])));
 	}
 	med = ((t_node *)stackget(in, (argc - 1) / 2)->content)->val;
-	ft_putnbr_fd(med, 1);
-	ft_putchar_fd('\n', 1);
-	ft_putstr_fd("Value\t\tInit\t\tOrder\n", 1);
+	//ft_putnbr_fd(med, 1);
+	//ft_putchar_fd('\n', 1);
+	//ft_putstr_fd("Value\t\tInit\t\tOrder\n", 1);
 	incr_order(in);
-	ft_lstiter(in, pval);
-	pstacks(stack_a, stack_b);
+	//ft_lstiter(in, pval);
+	//pstacks(stack_a, stack_b);
 	divide(&stack_a, &stack_b, med);
-	pstacks(stack_a, stack_b);
+	//pstacks(stack_a, stack_b);
 	//s('a', &stack_a);
 	//rr(&stack_a, &stack_b);
-	sort(&stack_a, &stack_b);
-	pstacks(stack_a, stack_b);
+	//printf("divided\n");
+	sort(&stack_a, &stack_b, med,
+		 ((t_node *)stackget(in, (argc - 1) / 2  - 1)->content)->val);
+	//printf("sorted\n");
+
+	//pstacks(stack_a, stack_b);
+	unify(&stack_a, &stack_b);
+	//pstacks(stack_a, stack_b);
 	return (0);
 }
