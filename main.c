@@ -134,6 +134,36 @@ bool	check_order(int dir, t_stack *stk)
 	return true;
 }
 
+void	bubble_sort_single(t_stack **a, int a_frst)
+{
+	bool	a_sorted;
+	bool	sa;
+
+	//printf("bubble sort single\n");
+	//printf("a_frst: %i\n", a_frst);
+	//exit(1);
+	a_sorted = check_order(1, *a);
+	while (!a_sorted)
+	{
+		if ((*a)->next->val == a_frst) {
+			r('a', a);
+			if (check_order(1, *a))
+				return;
+			r('a', a);
+			continue;
+		}
+		if (check_order(1, *a))
+			return;
+		sa = ((*a)->next && ((*a)->val > (*a)->next->val));
+		if (sa/* && (*a)->next->val != a_frst*/)
+			s('a', a);
+		else
+			r('a', a);
+
+		//pstacks(*a, NULL);
+	}
+}
+
 void	sort(t_stack **a, t_stack **b, int a_frst, int b_frst)
 {
 	bool	a_sorted;
@@ -207,6 +237,7 @@ t_list	*stackget(t_list *lst, int index)
 {
 	while(index--)
 		lst = lst->next;
+	//printf("in[0]: %i\n", ((t_node *) lst->content)->val);
 	return lst;
 }
 
@@ -214,6 +245,7 @@ int	main(int argc, char **argv)
 {
 	int		i;
 	int		med;
+	int 	size;
 	t_list	*in;
 	t_stack	*stack_a;
 	t_stack	*stack_b;
@@ -228,6 +260,9 @@ int	main(int argc, char **argv)
 		lstadd_sort(&in, create_node(ft_atoi(argv[i]), i - 1));
 		stk_add_back(&stack_a, stk_new(ft_atoi(argv[i])));
 	}
+	size = ft_lstsize(in);
+	//printf("size: %i\n", size);
+	//exit(0);
 	med = ((t_node *)stackget(in, (argc - 1) / 2)->content)->val;
 	//ft_putnbr_fd(med, 1);
 	//ft_putchar_fd('\n', 1);
@@ -235,13 +270,20 @@ int	main(int argc, char **argv)
 	incr_order(in);
 	//ft_lstiter(in, pval);
 	//pstacks(stack_a, stack_b);
-	divide(&stack_a, &stack_b, med);
 	//pstacks(stack_a, stack_b);
 	//s('a', &stack_a);
 	//rr(&stack_a, &stack_b);
 	//printf("divided\n");
-	sort(&stack_a, &stack_b, med,
-		 ((t_node *)stackget(in, (argc - 1) / 2  - 1)->content)->val);
+	//printf("in[0]: %i\n", ((t_node *) in->content)->val);
+	if (size < 4)
+		bubble_sort_single(&stack_a, ((t_node *) in->content)->val);
+		//bubble_sort_single(&stack_a, ((t_node *)stackget(in, 0)->content)->val);
+	else
+	{
+		divide(&stack_a, &stack_b, med);
+		sort(&stack_a, &stack_b, med,
+			 ((t_node *)stackget(in, (argc - 1) / 2  - 1)->content)->val);
+	}
 	//printf("sorted\n");
 
 	//pstacks(stack_a, stack_b);
