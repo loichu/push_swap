@@ -181,11 +181,11 @@ void	divide(t_stack **a, t_stack **b, int med)
 
 void	unify(t_stack **a, t_stack **b)
 {
-	while (*b)
+	while ((*b)->next->next)
 		push('a', a, b);
 }
 
-t_list	*stackget(t_list *lst, int index)
+t_list	*lstget(t_list *lst, int index)
 {
 	while(index--)
 		lst = lst->next;
@@ -211,16 +211,16 @@ int	main(int argc, char **argv)
 		stk_add_back(&stack_a, stk_new(ft_atoi(argv[i])));
 	}
 	size = ft_lstsize(in);
-	med = ((t_node *)stackget(in, (argc - 1) / 2)->content)->val;
+	med = ((t_node *) lstget(in, (argc - 1) / 2)->content)->val;
 	incr_order(in);
 	if (size < 5)
 		bubble_sort_single(&stack_a, ((t_node *) ft_lstlast(in)->content)->val, med);
 	else
 	{
 		divide(&stack_a, &stack_b, med);
-		sort(&stack_a, &stack_b, med,
-			 ((t_node *)stackget(in, (argc - 1) / 2  - 1)->content)->val);
+		unify(&stack_a, &stack_b);
+		pstacks(stack_a, stack_b);
+		sort(&stack_a, &stack_b);
 	}
-	unify(&stack_a, &stack_b);
 	return (0);
 }
