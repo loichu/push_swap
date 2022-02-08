@@ -112,33 +112,17 @@ void	pstacks(t_stack *a, t_stack *b)
 	}
 }
 
-//int 	check_order_jumps(t_stack *s)
-//{
-//	int jumps;
-//
-//	jumps = 0;
-//	while (s->next)
-//	{
-//		if (s->val > s->next->val)
-//			jumps++;
-//		s = s->next;
-//	}
-//}
-
 bool	check_order(int dir, t_stack *stk)
 {
 	while (stk->next)
 	{
-		//printf("curr: %i\tnext: %i\n", stk->val, stk->next->val);
 		if (dir > 0)
 		{
-			//printf("1\n");
 			if (stk->val > stk->next->val)
 				return false;
 		}
 		else
 		{
-			//printf("2\n");
 			if (stk->val < stk->next->val)
 				return false;
 		}
@@ -153,21 +137,10 @@ void	bubble_sort_single(t_stack **a, int a_last, int med)
 	bool	sa;
 	bool	rev;
 
-	//printf("bubble sort single\n");
-	//printf("a_last: %i\n", a_last);
-	//exit(1);
-	//(void) a_frst;
 	a_sorted = check_order(1, *a);
 	rev = (*a)->val < med;
 	while (!a_sorted)
 	{
-//		if ((*a)->next->val == a_frst) {
-//			r('a', a);
-//			if (check_order(1, *a))
-//				return;
-//			r('a', a);
-//			continue;
-//		}
 		if (check_order(1, *a))
 			return;
 		sa = ((*a)->val != a_last && ((*a)->val > (*a)->next->val));
@@ -181,22 +154,8 @@ void	bubble_sort_single(t_stack **a, int a_last, int med)
 			else
 				r('a', a);
 		}
-
-		//pstacks(*a, NULL);
 	}
 }
-
-//void	basic_sort(t_stack **a, int med, int last)
-//{
-//	if ((*a)->val > med)
-//		s('a', a);
-//	if ((*a)->next->val > (*a)->next->next->val)
-//	{
-//		revr('a', a);
-//		if ((*a)->val > (*a)->next->val)
-//			s('a', a);
-//	}
-//}
 
 void	sort(t_stack **a, t_stack **b, int a_frst, int b_frst)
 {
@@ -205,17 +164,10 @@ void	sort(t_stack **a, t_stack **b, int a_frst, int b_frst)
 	bool	sa;
 	bool	sb;
 
-	//
-	//printf("SORT\n");
 	a_sorted = check_order(1, *a);
 	b_sorted = check_order(-1, *b);
-	//printf("SORT\n");
 	while (!(a_sorted && b_sorted))
 	{
-		//printf("a: %i\tb: %i\n", a_sorted, b_sorted);
-		//printf("a_frst: %i\tb_frst: %i\n", a_frst, b_frst);
-		//pstacks(*a, *b);
-		//printf("sort");
 		sa = ((*a)->next && (*a)->next->val != a_frst) && ((*a)->val > (*a)->next->val);
 		sb = ((*b)->next && (*b)->next->val != b_frst) && ((*b)->val < (*b)->next->val);
 		if (sa && sb)
@@ -224,7 +176,6 @@ void	sort(t_stack **a, t_stack **b, int a_frst, int b_frst)
 			s('a', a);
 		else if (sb)
 			s('b', b);
-		//pstacks(*a, *b);
 		a_sorted = check_order(1, *a);
 		b_sorted = check_order(-1, *b);
 		if (!(a_sorted || b_sorted))
@@ -242,11 +193,9 @@ void	divide(t_stack **a, t_stack **b, int med)
 {
 	t_stack *start;
 
-	//printf("DIVIDE\n");
 	start = NULL;
 	while (1)
 	{
-		//printf("divide\n");
 		if (*a == start)
 			break ;
 		if ((*a)->val < med)
@@ -257,7 +206,6 @@ void	divide(t_stack **a, t_stack **b, int med)
 				start = *a;
 			r('a', a);
 		}
-		//printf("divide\n");
 	}
 }
 
@@ -271,7 +219,6 @@ t_list	*stackget(t_list *lst, int index)
 {
 	while(index--)
 		lst = lst->next;
-	//printf("in[0]: %i\n", ((t_node *) lst->content)->val);
 	return lst;
 }
 
@@ -284,7 +231,6 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 
-	//printf("hello\n");
 	i = 1;
 	in = ft_lstnew(create_node(ft_atoi(argv[i]), i - 1));
 	stack_a = stk_new(ft_atoi(argv[i]));
@@ -295,33 +241,16 @@ int	main(int argc, char **argv)
 		stk_add_back(&stack_a, stk_new(ft_atoi(argv[i])));
 	}
 	size = ft_lstsize(in);
-	//printf("size: %i\n", size);
-	//exit(0);
 	med = ((t_node *)stackget(in, (argc - 1) / 2)->content)->val;
-	//ft_putnbr_fd(med, 1);
-	//ft_putchar_fd('\n', 1);
-	//ft_putstr_fd("Value\t\tInit\t\tOrder\n", 1);
 	incr_order(in);
-	//ft_lstiter(in, pval);
-	//pstacks(stack_a, stack_b);
-	//pstacks(stack_a, stack_b);
-	//s('a', &stack_a);
-	//rr(&stack_a, &stack_b);
-	//printf("divided\n");
-	//printf("in[0]: %i\n", ((t_node *) in->content)->val);
 	if (size < 5)
 		bubble_sort_single(&stack_a, ((t_node *) ft_lstlast(in)->content)->val, med);
-		//bubble_sort_single(&stack_a, ((t_node *)stackget(in, 0)->content)->val);
 	else
 	{
 		divide(&stack_a, &stack_b, med);
 		sort(&stack_a, &stack_b, med,
 			 ((t_node *)stackget(in, (argc - 1) / 2  - 1)->content)->val);
 	}
-	//printf("sorted\n");
-
-	//pstacks(stack_a, stack_b);
 	unify(&stack_a, &stack_b);
-	//pstacks(stack_a, stack_b);
 	return (0);
 }
