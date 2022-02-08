@@ -21,4 +21,6 @@ void 	revr(char stack, t_stack **stk);
 void	rr(t_stack **a, t_stack **b);
 void	s(char stack, t_stack **stk);
 void	ss(t_stack **a, t_stack **b);
+bool	check_order(int dir, t_stack *stk);
+void	sort(t_stack **a, t_stack **b, int a_frst, int b_frst);
 #endif
