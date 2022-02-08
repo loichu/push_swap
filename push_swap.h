@@ -24,4 +24,5 @@ void	ss(t_stack **a, t_stack **b);
 bool	check_order(int dir, t_stack *stk);
 void	sort(t_stack **a, t_stack **b);
 t_list	*lstget(t_list *lst, int index);
+void	pstacks(t_stack *a, t_stack *b);
 #endif

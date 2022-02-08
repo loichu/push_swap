@@ -183,6 +183,7 @@ void	unify(t_stack **a, t_stack **b)
 {
 	while ((*b)->next->next)
 		push('a', a, b);
+	//printf("unified\n");
 }
 
 t_list	*lstget(t_list *lst, int index)
@@ -219,8 +220,14 @@ int	main(int argc, char **argv)
 	{
 		divide(&stack_a, &stack_b, med);
 		unify(&stack_a, &stack_b);
-		pstacks(stack_a, stack_b);
+		if (stack_b->val < stack_b->next->val)
+			s('b', &stack_b);
+		//pstacks(stack_a, stack_b);
 		sort(&stack_a, &stack_b);
+		//pstacks(stack_a, stack_b);
+		while (stack_b)
+			push('a', &stack_a, &stack_b);
+		//pstacks(stack_a, stack_b);
 	}
 	return (0);
 }
