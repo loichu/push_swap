@@ -112,6 +112,19 @@ void	pstacks(t_stack *a, t_stack *b)
 	}
 }
 
+//int 	check_order_jumps(t_stack *s)
+//{
+//	int jumps;
+//
+//	jumps = 0;
+//	while (s->next)
+//	{
+//		if (s->val > s->next->val)
+//			jumps++;
+//		s = s->next;
+//	}
+//}
+
 bool	check_order(int dir, t_stack *stk)
 {
 	while (stk->next)
@@ -134,35 +147,56 @@ bool	check_order(int dir, t_stack *stk)
 	return true;
 }
 
-void	bubble_sort_single(t_stack **a, int a_frst)
+void	bubble_sort_single(t_stack **a, int a_last, int med)
 {
 	bool	a_sorted;
 	bool	sa;
+	bool	rev;
 
 	//printf("bubble sort single\n");
-	//printf("a_frst: %i\n", a_frst);
+	//printf("a_last: %i\n", a_last);
 	//exit(1);
+	//(void) a_frst;
 	a_sorted = check_order(1, *a);
+	rev = (*a)->val < med;
 	while (!a_sorted)
 	{
-		if ((*a)->next->val == a_frst) {
-			r('a', a);
-			if (check_order(1, *a))
-				return;
-			r('a', a);
-			continue;
-		}
+//		if ((*a)->next->val == a_frst) {
+//			r('a', a);
+//			if (check_order(1, *a))
+//				return;
+//			r('a', a);
+//			continue;
+//		}
 		if (check_order(1, *a))
 			return;
-		sa = ((*a)->next && ((*a)->val > (*a)->next->val));
-		if (sa/* && (*a)->next->val != a_frst*/)
+		sa = ((*a)->val != a_last && ((*a)->val > (*a)->next->val));
+		if (sa) {
 			s('a', a);
+		}
 		else
-			r('a', a);
+		{
+			if (rev)
+				revr('a', a);
+			else
+				r('a', a);
+		}
 
 		//pstacks(*a, NULL);
 	}
 }
+
+//void	basic_sort(t_stack **a, int med, int last)
+//{
+//	if ((*a)->val > med)
+//		s('a', a);
+//	if ((*a)->next->val > (*a)->next->next->val)
+//	{
+//		revr('a', a);
+//		if ((*a)->val > (*a)->next->val)
+//			s('a', a);
+//	}
+//}
 
 void	sort(t_stack **a, t_stack **b, int a_frst, int b_frst)
 {
@@ -275,8 +309,8 @@ int	main(int argc, char **argv)
 	//rr(&stack_a, &stack_b);
 	//printf("divided\n");
 	//printf("in[0]: %i\n", ((t_node *) in->content)->val);
-	if (size < 4)
-		bubble_sort_single(&stack_a, ((t_node *) in->content)->val);
+	if (size < 5)
+		bubble_sort_single(&stack_a, ((t_node *) ft_lstlast(in)->content)->val, med);
 		//bubble_sort_single(&stack_a, ((t_node *)stackget(in, 0)->content)->val);
 	else
 	{
