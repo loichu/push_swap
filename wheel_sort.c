@@ -66,12 +66,8 @@ int 	get_move(int val, t_stack *b)
 	//printf("prev: %i\tcurr: %i\tnext: %i\n", prev, val, b->val);
 	while (!(val > b->val && val < prev))
 	{
-		if ((b->val == min && val < min) || (b->val == max && val > max))
-		{
-			if (b->val == min && val < min)
-				move++;
+		if (b->val == max && val > max)
 			break;
-		}
 		move++;
 		if (b->val == min && val < min)
 			break;
@@ -104,6 +100,7 @@ void	make_move(t_stack **stk, int move)
 
 void	sort(t_stack **a, t_stack **b)
 {
+	int max;
 	//printf("sort start\n");
 	while (*a)
 	{
@@ -112,4 +109,8 @@ void	sort(t_stack **a, t_stack **b)
 		push('b', b, a);
 	}
 	//pstacks(*a, *b);
+	max = get_max(*b);
+	while ((*b)->val != max)
+		r('b', b);
+
 }
