@@ -35,7 +35,9 @@ void	sort(t_stacks **stacks)
 {
 	while ((*stacks)->size_b > 0)
 	{
+		printf("loop\n");
 		get_scores(*stacks);
+		printf("got scores\n");
 		make_moves(stacks, get_best_node((*stacks)->b));
 		p('a', stacks);
 	}

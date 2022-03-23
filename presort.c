@@ -52,7 +52,7 @@ void	moves(t_stacks **stacks, t_list **chunks)
 	rotate_stacks(stacks, best_node);
 }
 
-void	presort(t_stacks **stacks)
+t_list	*presort(t_stacks **stacks)
 {
 	t_list	*chunks;
 	int 	nb_chunks;
@@ -72,4 +72,5 @@ void	presort(t_stacks **stacks)
 		moves(stacks, &chunks);
 		p_chunk(stacks, &chunks);
 	}
+	return (chunks);
 }
