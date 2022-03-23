@@ -1,8 +1,8 @@
 #include "push_swap.h"
 
-void	rotate(t_stack **stk)
+void	rotate(t_node **stk)
 {
-	t_stack *tmp;
+	t_node *tmp;
 
 	if (!*stk)
 		return ;
@@ -14,10 +14,10 @@ void	rotate(t_stack **stk)
 	tmp->next->next = NULL;
 }
 
-void	reverse(t_stack **stk)
+void	reverse(t_node **stk)
 {
-	t_stack *tmp;
-	t_stack *prev;
+	t_node *tmp;
+	t_node *prev;
 
 	if (!(*stk && (*stk)->next))
 		return ;
@@ -33,34 +33,44 @@ void	reverse(t_stack **stk)
 	*stk = tmp;
 }
 
-void	r(char stack, t_stack **stk)
+void	print_cmd(char *cmd)
 {
-	rotate(stk);
 	ft_putchar_fd('r', 1);
-	ft_putchar_fd(stack, 1);
+	ft_putstr_fd(cmd, 1);
 	ft_putchar_fd('\n', 1);
 }
 
-void	revr(char stack, t_stack **stk)
+void	chunks_r(char *cmd, t_stacks **stacks)
 {
-	reverse(stk);
-	ft_putstr_fd("rr", 1);
-	ft_putchar_fd(stack, 1);
-	ft_putchar_fd('\n', 1);
+	print_cmd(cmd);
+	if ((*cmd == 'a' || *cmd == 'r') && *(++cmd) == '\0')
+		rotate(&(*stacks)->a);
+	else if (*cmd == 'r' || *cmd == 'a')
+		reverse(&(*stacks)->a);
 }
 
-void	rr(t_stack **a, t_stack **b)
+void	r(char *cmd, t_stacks **stacks)
 {
-	rotate(a);
-	rotate(b);
-	ft_putstr_fd("rr", 1);
-	ft_putchar_fd('\n', 1);
-}
-
-void	rrr(t_stack **a, t_stack **b)
-{
-	reverse(a);
-	reverse(b);
-	ft_putstr_fd("rrr", 1);
-	ft_putchar_fd('\n', 1);
+	print_cmd(cmd);
+	if (*cmd == 'a')
+		rotate(&(*stacks)->a);
+	else if (*cmd == 'b')
+		rotate(&(*stacks)->b);
+	else if (*cmd++ == 'r')
+	{
+		if (*cmd == 'a')
+			reverse(&(*stacks)->a);
+		else if (*cmd == 'b')
+			reverse(&(*stacks)->b);
+		else if (*cmd == 'r')
+		{
+			reverse(&(*stacks)->a);
+			reverse(&(*stacks)->b);
+		}
+		else if (*cmd == '\0')
+		{
+			rotate(&(*stacks)->a);
+			rotate(&(*stacks)->b);
+		}
+	}
 }

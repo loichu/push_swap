@@ -1,116 +1,45 @@
 #include "push_swap.h"
 
-int 	stack_size(t_stack *stk)
+void	make_moves(t_stacks **stacks, t_node *best_node)
 {
-	int count;
-
-	count = 0;
-	while (stk)
-	{
-		count++;
-		stk = stk->next;
-	}
-	return count;
+	if (best_node->move_a * best_node->move_b > 0)
+		exec_rotates_together(stacks, best_node, false);
+	if (best_node->move_a)
+		exec_rotates(stacks, 'a', best_node->move_a, false);
+	if (best_node->move_b)
+		exec_rotates(stacks, 'b', best_node->move_b, false);
 }
 
-int 	stack_get(t_stack *stack, int index)
+void	get_scores(t_stacks *stacks)
 {
-	while(index--)
-		stack = stack->next;
-	return stack->val;
-}
+	int 	i;
+	t_node 	*node;
+	t_node 	*stack_a;
+	t_node	*prev;
 
-int 	get_min(t_stack *stk)
-{
-	int min;
-
-	min = stk->val;
-	while (stk)
+	node = stacks->b;
+	stack_a = stacks->a;
+	prev = node_last(stacks->a);
+	i = -1;
+	while (++i < stacks->size_b)
 	{
-		if (stk->val < min)
-			min = stk->val;
-		stk = stk->next;
-	}
-	return min;
-}
-
-int 	get_max(t_stack *stk)
-{
-	int max;
-
-	max = stk->val;
-	while (stk)
-	{
-		if (stk->val > max)
-			max = stk->val;
-		stk = stk->next;
-	}
-	return max;
-}
-
-int 	get_move(int val, t_stack *b)
-{
-	int 	move;
-	int 	size;
-	int 	prev;
-	t_stack *start;
-	int 	min;
-	int 	max;
-
-	min = get_min(b);
-	max = get_max(b);
-	start = b;
-	size = stack_size(b);
-	move = 0;
-	prev = stack_get(b, size - 1);
-	//printf("prev: %i\tcurr: %i\tnext: %i\n", prev, val, b->val);
-	while (!(val > b->val && val < prev))
-	{
-		if (b->val == max && val > max)
-			break;
-		move++;
-		if (b->val == min && val < min)
-			break;
-		prev = b->val;
-		if (b->next)
-			b = b->next;
-		else
-			b = start;
-		//printf("prev: %i\tcurr: %i\tnext: %i\n", prev, val, b->val);
-	}
-	if (move > size / 2)
-		move = (size - move) * -1;
-	//printf("move: %i\n", move);
-	return (move);
-}
-
-void	make_move(t_stack **stk, int move)
-{
-	if (move < 0)
-	{
-		while (move++)
-			revr('b', stk);
-	}
-	else
-	{
-		while (move--)
-			r('b', stk);
+		while (!(node->val < stack_a->val && node->val > prev->val))
+			node->move_a++;
+		node->move_b = move_to_top(i, stacks->size_b);
+		node->score = calc_score(node);
+		node = node->next;
 	}
 }
 
-void	sort(t_stack **a, t_stack **b)
+void	sort(t_stacks **stacks)
 {
-	int max;
-	//printf("sort start\n");
-	while (*a)
+	while ((*stacks)->size_b > 0)
 	{
-		//pstacks(*a, *b);
-		make_move(b, get_move((*a)->val, *b));
-		push('b', b, a);
+		get_scores(*stacks);
+		make_moves(stacks, get_best_node((*stacks)->b));
+		p('a', stacks);
 	}
-	//pstacks(*a, *b);
-	max = get_max(*b);
-	while ((*b)->val != max)
-		r('b', b);
+	while ((*stacks)->a->val != (*stacks)->size_a - 1)
+		r("a", stacks);
 
 }

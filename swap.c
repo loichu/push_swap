@@ -1,9 +1,9 @@
 // vim: ts=4:sw=4
 #include "push_swap.h"
 
-void	swap(t_stack **stack)
+void	swap(t_node **stack)
 {
-	t_stack *tmp;
+	t_node    *tmp;
 
 	tmp = (*stack)->next;
 	(*stack)->next = tmp->next;
@@ -11,7 +11,7 @@ void	swap(t_stack **stack)
 	*stack = tmp;
 }
 
-void	s(char stack, t_stack **stk)
+void	s(char stack, t_node **stk)
 {
 	swap(stk);
 	ft_putchar_fd('s', 1);
@@ -19,10 +19,9 @@ void	s(char stack, t_stack **stk)
 	ft_putchar_fd('\n', 1);
 }
 
-void	ss(t_stack **a, t_stack **b)
+void	ss(t_stacks **stacks)
 {
-	swap(a);
-	swap(b);
-	ft_putstr_fd("ss", 1);
-	ft_putchar_fd('\n', 1);
+	swap(&(*stacks)->a);
+	swap(&(*stacks)->b);
+	ft_putstr_fd("ss\n", 1);
 }
