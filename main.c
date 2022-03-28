@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 	t_list		*chunks;
 
     stacks = init_stacks(&(argv[1]), argc - 1);
-	if (stacks->size_a < 5)
+	if (stacks->size_a <= 8)
         basic_sort(&stacks);
 	else
 	{

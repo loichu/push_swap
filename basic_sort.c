@@ -33,19 +33,54 @@ bool	is_ordered(t_node *stk)
 	return (true);
 }
 
+//void	basic_sort(t_stacks **stacks)
+//{
+//	int		med;
+//
+//	med = ((*stacks)->size_a + 1) / 2;
+//	printf("med: %i\n", med);
+//	while (true)
+//	{
+//		if (is_ordered((*stacks)->a))
+//			return ;
+//		if ((*stacks)->a->val > med)
+//			r("a", stacks);
+//		else if ((*stacks)->a->val > (*stacks)->a->next->val)
+//			s('a', &((*stacks)->a));
+//	}
+//}
+
+//void	check_push_zero(t_stacks **stacks)
+//{
+//	if ((*stacks)->a->val == 0)
+//		p('b', stacks);
+//}
+
 void	basic_sort(t_stacks **stacks)
 {
-	int		med;
+	bool	sa;
+	bool	rev;
+	int 	med;
+	int 	last;
 
-	med = ((*stacks)->size_a + 1) / 2;
-	printf("med: %i\n", med);
-	while (true)
+	med = (*stacks)->size_a / 2;
+	last = (*stacks)->size_a - 1;
+	rev = (*stacks)->a->val < med;
+	while (!is_ordered((*stacks)->a))
 	{
-		if (is_ordered((*stacks)->a))
-			return ;
-		if ((*stacks)->a->val > med)
-			r("a", stacks);
-		else if ((*stacks)->a->val > (*stacks)->a->next->val)
+		if ((*stacks)->a->val == 0)
+			p('b', stacks);
+		sa = ((*stacks)->a->val != last && ((*stacks)->a->val > (*stacks)->a->next->val));
+		if (sa)
 			s('a', &((*stacks)->a));
+		else
+		{
+			if (rev)
+				r("ra", stacks);
+			else
+				r("a", stacks);
+		}
 	}
+	if ((*stacks)->size_b > 0)
+		p('a', stacks);
 }
