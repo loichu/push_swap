@@ -36,7 +36,7 @@ typedef struct	s_chunk
 t_node	*analyze(char **input, int size);
 
 // presort.c
-t_list	*presort(t_stacks **stacks);
+t_list	*presort(t_stacks **stacks, int nb_chunks);
 
 // basic_sort.c
 void	basic_sort(t_stacks **stacks);

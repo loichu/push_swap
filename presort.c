@@ -52,14 +52,12 @@ void	moves(t_stacks **stacks, t_list **chunks)
 	rotate_stacks(stacks, best_node);
 }
 
-t_list	*presort(t_stacks **stacks)
+t_list	*presort(t_stacks **stacks, int nb_chunks)
 {
 	t_list	*chunks;
-	int 	nb_chunks;
 	int 	chunk_size;
 	int 	last_chunk_size;
 
-	nb_chunks = 4;
 	chunk_size = (*stacks)->size_a / nb_chunks;
 	last_chunk_size = (*stacks)->size_a - nb_chunks * chunk_size;
 	if (last_chunk_size)

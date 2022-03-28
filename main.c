@@ -41,15 +41,20 @@ int	main(int argc, char **argv)
 {
     t_stacks	*stacks;
 	t_list		*chunks;
+	int 		nb_chunks;
 
     stacks = init_stacks(&(argv[1]), argc - 1);
 	if (stacks->size_a <= 8)
-        basic_sort(&stacks);
-	else
 	{
-		chunks = presort(&stacks);
-		make_b(chunks, &stacks);
-		sort(&stacks);
+        basic_sort(&stacks);
+		return (0);
 	}
+	else if (stacks->size_a > 250)
+		nb_chunks = 5;
+	else
+		nb_chunks = 2;
+	chunks = presort(&stacks, nb_chunks);
+	make_b(chunks, &stacks);
+	sort(&stacks);
 	return (0);
 }
