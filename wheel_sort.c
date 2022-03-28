@@ -44,39 +44,13 @@ void	get_scores(t_stacks *stacks)
 	}
 }
 
-void    print_stacks(t_node *stack_b, t_node *stack_a)
-{
-	printf("B\tMB\tS\tMA\tA\n");
-	printf("====================================\n");
-	while (stack_a && stack_b)
-	{
-		printf("%i\t%i\t%i\t%i\t%i\n", stack_b->val, stack_b->move_b, stack_b->score, stack_b->move_a, stack_a->val);
-		stack_b = stack_b->next;
-		stack_a = stack_a->next;
-	}
-	while (stack_b)
-	{
-		printf("%i\t%i\t%i\t%i\n", stack_b->val, stack_b->move_b, stack_b->score, stack_b->move_a);
-		stack_b = stack_b->next;
-	}
-	while (stack_a)
-	{
-		printf("\t\t\t\t%i\n", stack_a->val);
-		stack_a = stack_a->next;
-	}
-}
-
 void	sort(t_stacks **stacks)
 {
-	char    *press_enter;
 	char	*cmd;
 
-	press_enter = "";
 	while ((*stacks)->size_b > 0)
 	{
 		get_scores(*stacks);
-		print_stacks((t_node *)(*stacks)->b, (t_node *)(*stacks)->a);
-		read(1, press_enter, 1);
 		make_moves(stacks, get_best_node((*stacks)->b));
 		p('a', stacks);
 	}
@@ -86,5 +60,4 @@ void	sort(t_stacks **stacks)
 		cmd = "a";
 	while ((*stacks)->a->val != 0)
 		r(cmd, stacks);
-
 }
