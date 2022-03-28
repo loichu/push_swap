@@ -47,7 +47,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		chunks = presort(&stacks);
-		printf("got chunks\n");
+		//printf("got chunks\n");
 		free_chunks(chunks, &stacks);
 		sort(&stacks);
 	}

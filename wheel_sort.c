@@ -18,16 +18,24 @@ void	get_scores(t_stacks *stacks)
 	t_node	*prev;
 
 	node = stacks->b;
-	stack_a = stacks->a;
-	prev = node_last(stacks->a);
 	i = -1;
 	while (++i < stacks->size_b)
 	{
+		stack_a = stacks->a;
+		prev = node_last(stacks->a);
+		node->move_a = 0;
 		while (!(node->val < stack_a->val && node->val > prev->val))
+		{
+			//printf("val: %i, prev: %i, curr: %i\n", node->val, prev->val, stack_a->val);
 			node->move_a++;
+			prev = stack_a;
+			stack_a = stack_a->next;
+		}
+		//printf("got move a\n");
 		node->move_b = move_to_top(i, stacks->size_b);
 		node->score = calc_score(node);
 		node = node->next;
+		//printf("next node %i/%i\n", i, stacks->size_b);
 	}
 }
 
@@ -35,13 +43,13 @@ void	sort(t_stacks **stacks)
 {
 	while ((*stacks)->size_b > 0)
 	{
-		printf("loop\n");
+		//printf("loop\n");
 		get_scores(*stacks);
-		printf("got scores\n");
+		//printf("got scores\n");
 		make_moves(stacks, get_best_node((*stacks)->b));
 		p('a', stacks);
 	}
-	while ((*stacks)->a->val != (*stacks)->size_a - 1)
+	while ((*stacks)->a->val != 0)
 		r("a", stacks);
 
 }
