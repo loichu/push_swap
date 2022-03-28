@@ -15,7 +15,7 @@ t_stacks	*init_stacks(char **input, int size)
     return (stacks);
 }
 
-void	free_chunks(t_list *chunks, t_stacks **stacks)
+void	make_b(t_list *chunks, t_stacks **stacks)
 {
 	t_list	*prev;
 	t_node	*last_b;
@@ -48,8 +48,7 @@ int	main(int argc, char **argv)
 	else
 	{
 		chunks = presort(&stacks);
-		//printf("got chunks\n");
-		free_chunks(chunks, &stacks);
+		make_b(chunks, &stacks);
 		sort(&stacks);
 	}
 	return (0);

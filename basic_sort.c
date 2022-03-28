@@ -35,26 +35,17 @@ bool	is_ordered(t_node *stk)
 
 void	basic_sort(t_stacks **stacks)
 {
-	bool	sa;
-	bool	rev;
 	int		med;
 
-	med = node_get((*stacks)->a, (*stacks)->size_a / 2)->val;
+	med = ((*stacks)->size_a + 1) / 2;
+	printf("med: %i\n", med);
 	while (true)
 	{
 		if (is_ordered((*stacks)->a))
 			return ;
-		rev = ((*stacks)->a)->val < med;
-		sa = (((*stacks)->a)->val != node_last((*stacks)->a)->val
-				&& (((*stacks)->a)->val > ((*stacks)->a)->next->val));
-		if (sa)
+		if ((*stacks)->a->val > med)
+			r("a", stacks);
+		else if ((*stacks)->a->val > (*stacks)->a->next->val)
 			s('a', &((*stacks)->a));
-		else
-		{
-			if (rev)
-				r("ra", stacks);
-			else
-				r("a", stacks);
-		}
 	}
 }
