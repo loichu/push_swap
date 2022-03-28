@@ -83,4 +83,7 @@ void	exec_rotates_together(t_stacks **stacks, t_node *best_node, bool chunk);
 t_node	*node_last(t_node *stk);
 
 void	sort(t_stacks **stacks);
+
+// print_debug.c
+void    print_stack_chunks(t_list *chunks, t_node *stack_a);
 #endif

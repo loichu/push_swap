@@ -61,14 +61,14 @@ t_list	*presort(t_stacks **stacks)
 
 	nb_chunks = 4;
 	chunk_size = (*stacks)->size_a / nb_chunks;
-	last_chunk_size = (*stacks)->size_a % chunk_size;
-	if (last_chunk_size) {
+	last_chunk_size = (*stacks)->size_a - nb_chunks * chunk_size;
+	if (last_chunk_size)
 		nb_chunks++;
-	}
 	chunks = init_chunks(chunk_size, nb_chunks, last_chunk_size);
 	while ((*stacks)->size_a > 2)
 	{
 		scores(*stacks, chunks);
+		print_stack_chunks(chunks, (t_node *)(*stacks)->a);
 		moves(stacks, &chunks);
 		p_chunk(stacks, &chunks);
 	}
