@@ -20,6 +20,7 @@ void	free_chunks(t_list *chunks, t_stacks **stacks)
 	t_list	*prev;
 	t_node	*last_b;
 
+	rotate_chunks(&chunks);
 	last_b = ((t_chunk *)chunks->content)->nodes;
 	while (chunks)
 	{
