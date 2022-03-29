@@ -15,6 +15,7 @@ NAME=push_swap
 CC=gcc
 
 CFLAGS = -Wall -Wextra -Werror -I.
+DEBUG_CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -I.
 LDFLAGS = -Llibft -lft
 
 SRCS = main.c push.c rotate.c swap.c wheel_sort.c presort.c node.c math.c errors.c chunks.c analyze.c basic_sort.c move_utils.c
@@ -32,11 +33,14 @@ all:			$(NAME)
 $(NAME):		$(OBJS) $(MOCK_OBJS)
 				gcc -o $(NAME) $(OBJS) $(MOCK_OBJS) $(CFLAGS) $(LDFLAGS)
 
-debug:			$(OBJS) $(DEBUG_OBJS)
+ascii-viz:		$(OBJS) $(DEBUG_OBJS)
 				gcc -o $(NAME) $(OBJS) $(DEBUG_OBJS) $(CFLAGS) $(LDFLAGS)
 
+debug:			$(OBJS) $(MOCK_OBJS)
+				gcc -o $(NAME) $(OBJS) $(MOCK_OBJS) $(DEBUG_CFLAGS) $(LDFLAGS)
+
 clean:
-				$(RM) $(OBJS)
+				$(RM) $(OBJS) $(MOCK_OBJS) $(DEBUG_OBJS)
 
 fclean:			clean
 				$(RM) $(NAME)

@@ -41,6 +41,7 @@ void	p_chunk(t_stacks **stacks, t_list **chunks)
 	last_chunk = (t_chunk *)(*chunks)->content;
 	node = (t_node *)(*stacks)->a;
 	(*stacks)->a = node->next;
+	node->next = NULL;
 	(*stacks)->size_a--;
 	ft_putstr_fd("pb\n", 1);
 	if (is_in_chunk(node, first_chunk))

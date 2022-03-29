@@ -25,7 +25,6 @@ typedef struct s_stacks
 
 typedef struct	s_chunk
 {
-    int 	max_size;
     int 	size;
     int 	min;
     int 	max;

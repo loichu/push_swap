@@ -36,6 +36,7 @@ void	exec_rotates(t_stacks **stacks, char stack, int moves, bool chunk)
 		else
 			r(cmd, stacks);
 	}
+	free(cmd);
 }
 
 void	exec_rotates_together(t_stacks **stacks, t_node *best_node, bool chunk)

@@ -15,6 +15,26 @@ t_stacks	*init_stacks(char **input, int size)
     return (stacks);
 }
 
+t_stacks	*free_stacks(t_stacks *stacks)
+{
+	t_node	*freed;
+
+	while (stacks->a)
+	{
+		freed = stacks->a;
+		stacks->a = stacks->a->next;
+		free(freed);
+	}
+	while (stacks->b)
+	{
+		freed = stacks->b;
+		stacks->b = stacks->b->next;
+		free(freed);
+	}
+	free(stacks);
+	return (NULL);
+}
+
 void	make_b(t_list *chunks, t_stacks **stacks)
 {
 	t_list	*prev;
@@ -37,13 +57,26 @@ void	make_b(t_list *chunks, t_stacks **stacks)
 	}
 }
 
+t_stacks	*parse_args(int argc, char **argv)
+{
+	int	nb_args;
+
+	nb_args = argc - 1;
+	if (nb_args < 2)
+		exit(0);
+	else
+		return (init_stacks(&(argv[1]), nb_args));
+
+}
+
 int	main(int argc, char **argv)
 {
     t_stacks	*stacks;
 	t_list		*chunks;
 	int 		nb_chunks;
 
-    stacks = init_stacks(&(argv[1]), argc - 1);
+
+    stacks = parse_args(argc, argv);
 	if (stacks->size_a <= 8)
 	{
         basic_sort(&stacks);
@@ -56,5 +89,7 @@ int	main(int argc, char **argv)
 	chunks = presort(&stacks, nb_chunks);
 	make_b(chunks, &stacks);
 	sort(&stacks);
+	stacks = free_stacks(stacks);
+	//while (true){}
 	return (0);
 }

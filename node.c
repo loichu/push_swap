@@ -13,6 +13,9 @@ t_node *new_node(int val)
 		return (NULL);
 	r->val = val;
 	r->next = NULL;
+	r->move_a = 0;
+	r->move_b = 0;
+	r->score = 0;
 	return (r);
 }
 
@@ -25,14 +28,12 @@ void	node_addback(t_node **list, t_node *new)
 	if (!*list)
 	{
 		*list = new;
-		new->next = NULL;
 		return ;
 	}
 	iter = *list;
 	while (iter->next)
 		iter = iter->next;
 	iter->next = new;
-	new->next = NULL;
 }
 
 void	node_addfront(t_node **list, t_node *new)

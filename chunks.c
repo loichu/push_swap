@@ -19,8 +19,9 @@ t_list	*init_chunks(int chunk_size, int nb_chunks, int last_chunk_size)
 			chunk_size = last_chunk_size;
 		}
 		chunk->max = chunk->min + chunk_size - 1;
-		chunk->max_size = chunk_size;
+		//chunk->max_size = chunk_size;
 		chunk->size = 0;
+		chunk->nodes = NULL;
 		ft_lstadd_back(&chunks, ft_lstnew(chunk));
 	}
 	reverse_rotate_chunks(&chunks);
