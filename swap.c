@@ -21,7 +21,7 @@ void	s(char stack, t_node **stk)
 
 void	ss(t_stacks **stacks)
 {
-	swap(&(*stacks)->a);
-	swap(&(*stacks)->b);
+	swap(&((*stacks)->a));
+	swap(&((*stacks)->b));
 	ft_putstr_fd("ss\n", 1);
 }

@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror -I.
 DEBUG_CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -I.
 LDFLAGS = -Llibft -lft
 
-SRCS = main.c push.c rotate.c swap.c wheel_sort.c presort.c node.c math.c errors.c chunks.c analyze.c basic_sort.c move_utils.c
+SRCS = main.c push.c rotate.c swap.c wheel_sort.c presort.c node.c math.c errors.c chunks.c analyze.c basic_sort.c move_utils.c utils.c
 DEBUG_SRCS = print_debug.c
 MOCK_SRCS = mock_debug.c
 
