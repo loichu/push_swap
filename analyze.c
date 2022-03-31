@@ -46,6 +46,34 @@ void	replace_values(t_list *sorted)
 	free(sorted);
 }
 
+int	r_get_number(char *s, int i, int sign)
+{
+	static int	limit = INT_MAX / 10;
+	int 		u;
+
+	if (!*s)
+		return (i * sign);
+	u = *s - 48;
+	if (!ft_isdigit(*s) || i > limit || (i == limit
+		&& ((sign > 0 && u > 7) || (sign < 0 && u > 8))))
+		raise_error(1);
+	return (r_get_number(++s, i * 10 + u, sign));
+}
+
+int	my_atoi(char *s)
+{
+	int	sign;
+
+	if (*s == '-')
+	{
+		s++;
+		sign = -1;
+	}
+	else
+		sign = 1;
+	return (r_get_number(s, 0, sign));
+}
+
 t_node *analyze(char **input, int size)
 {
 	int		i;
@@ -58,7 +86,7 @@ t_node *analyze(char **input, int size)
 	sorted = NULL;
 	while (++i < size)
 	{
-		node = new_node(ft_atoi(input[i]));
+		node = new_node(my_atoi(input[i]));
 		node_addback(&initial, node);
 		lstadd_sort(&sorted, node);
 	}
