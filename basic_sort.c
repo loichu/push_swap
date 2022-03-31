@@ -33,29 +33,6 @@ bool	is_ordered(t_node *stk)
 	return (true);
 }
 
-//void	basic_sort(t_stacks **stacks)
-//{
-//	int		med;
-//
-//	med = ((*stacks)->size_a + 1) / 2;
-//	printf("med: %i\n", med);
-//	while (true)
-//	{
-//		if (is_ordered((*stacks)->a))
-//			return ;
-//		if ((*stacks)->a->val > med)
-//			r("a", stacks);
-//		else if ((*stacks)->a->val > (*stacks)->a->next->val)
-//			s('a', &((*stacks)->a));
-//	}
-//}
-
-//void	check_push_zero(t_stacks **stacks)
-//{
-//	if ((*stacks)->a->val == 0)
-//		p('b', stacks);
-//}
-
 void	basic_sort(t_stacks **stacks)
 {
 	bool	sa;
