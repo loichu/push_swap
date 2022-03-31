@@ -12,16 +12,6 @@
 
 #include "push_swap.h"
 
-t_node	*node_get(t_node *stk, int index)
-{
-	int	i;
-
-	i = 0;
-	while (i++ < index)
-		stk = stk->next;
-	return (stk);
-}
-
 bool	is_ordered(t_node *stk)
 {
 	while (stk->next)
