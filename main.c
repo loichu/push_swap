@@ -59,14 +59,27 @@ void	make_b(t_list *chunks, t_stacks **stacks)
 
 t_stacks	*parse_args(int argc, char **argv)
 {
-	int	nb_args;
+	int			nb_args;
+	char		**args;
+	t_stacks	*stacks;
 
-	nb_args = argc - 1;
+	if (argc == 2)
+		args = ft_split(argv[1], ' ');
+	else
+		args = &(argv[1]);
+	nb_args = 0;
+	while (args[nb_args])
+		nb_args++;
 	if (nb_args < 2)
 		exit(0);
-	else
-		return (init_stacks(&(argv[1]), nb_args));
-
+	stacks = init_stacks(args, nb_args);
+	if (argc == 2)
+	{
+		while (nb_args)
+			free(args[--nb_args]);
+		free(args);
+	}
+	return (stacks);
 }
 
 int	main(int argc, char **argv)
@@ -77,7 +90,7 @@ int	main(int argc, char **argv)
 
 
     stacks = parse_args(argc, argv);
-	if (stacks->size_a <= 8)
+	if (stacks->size_a < 6)
 	{
         basic_sort(&stacks);
 		return (0);
@@ -90,6 +103,5 @@ int	main(int argc, char **argv)
 	make_b(chunks, &stacks);
 	sort(&stacks);
 	stacks = free_stacks(stacks);
-	//while (true){}
 	return (0);
 }
