@@ -93,6 +93,7 @@ int	main(int argc, char **argv)
 	if (stacks->size_a < 6)
 	{
         basic_sort(&stacks);
+		stacks = free_stacks(stacks);
 		return (0);
 	}
 	else if (stacks->size_a > 250)
