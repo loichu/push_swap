@@ -6,7 +6,7 @@
 /*   By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/23 20:53:52 by lhumbert          #+#    #+#             */
-/*   Updated: 2022/03/23 20:59:20 by lhumbert         ###   ########.fr       */
+/*   Updated: 2022/04/04 22:21:39 by lhumbert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,8 @@ void	last_push_swap(t_stacks **stacks, int last)
 void	basic_sort(t_stacks **stacks)
 {
 	bool	rev;
-	int 	med;
-	int 	last;
+	int		med;
+	int		last;
 
 	last = (*stacks)->size_a - 1;
 	med = (*stacks)->size_a / 2;

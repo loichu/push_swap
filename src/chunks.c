@@ -1,13 +1,22 @@
-//
-// Created by loichu on 08.03.22.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chunks.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 22:32:20 by lhumbert          #+#    #+#             */
+/*   Updated: 2022/04/04 22:33:59 by lhumbert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 t_list	*init_chunks(int chunk_size, int nb_chunks, int last_chunk_size)
 {
-	t_chunk *chunk;
-	t_list 	*chunks;
-	int 	i;
+	t_chunk	*chunk;
+	t_list	*chunks;
+	int		i;
 
 	chunks = NULL;
 	i = 0;
@@ -15,11 +24,9 @@ t_list	*init_chunks(int chunk_size, int nb_chunks, int last_chunk_size)
 	{
 		chunk = (t_chunk *)malloc(sizeof(t_chunk));
 		chunk->min = (i - 1) * chunk_size;
-		if (nb_chunks == i && last_chunk_size) {
+		if (nb_chunks == i && last_chunk_size)
 			chunk_size = last_chunk_size;
-		}
 		chunk->max = chunk->min + chunk_size - 1;
-		//chunk->max_size = chunk_size;
 		chunk->size = 0;
 		chunk->nodes = NULL;
 		ft_lstadd_back(&chunks, ft_lstnew(chunk));
@@ -42,8 +49,8 @@ void	rotate_chunks(t_list **chunks)
 
 void	reverse_rotate_chunks(t_list **chunks)
 {
-	t_list *tmp;
-	t_list *prev;
+	t_list	*tmp;
+	t_list	*prev;
 
 	if (!(*chunks && (*chunks)->next))
 		return ;
@@ -70,7 +77,7 @@ int	move_to_chunk(t_node *node, t_list *chunks, int stack_size)
 {
 	t_chunk	*first_chunk;
 	t_chunk	*last_chunk;
-	int 	move;
+	int		move;
 
 	move = 0;
 	while (chunks->next)

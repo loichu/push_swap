@@ -1,12 +1,20 @@
-//
-// Created by loichu on 22.03.22.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   node.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 22:25:46 by lhumbert          #+#    #+#             */
+/*   Updated: 2022/04/04 22:26:30 by lhumbert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_node *new_node(int val)
+t_node	*new_node(int val)
 {
-	t_node *r;
+	t_node	*r;
 
 	r = (t_node *)malloc(sizeof(t_node));
 	if (!r)

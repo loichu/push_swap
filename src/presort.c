@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   presort.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 22:24:57 by lhumbert          #+#    #+#             */
+/*   Updated: 2022/04/04 22:25:36 by lhumbert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	scores(t_stacks *stacks, t_list *chunks)
 {
-	int 	i;
-	t_node 	*node;
+	int		i;
+	t_node	*node;
 
 	node = stacks->a;
 	i = -1;
@@ -55,8 +67,8 @@ void	moves(t_stacks **stacks, t_list **chunks)
 t_list	*presort(t_stacks **stacks, int nb_chunks)
 {
 	t_list	*chunks;
-	int 	chunk_size;
-	int 	last_chunk_size;
+	int		chunk_size;
+	int		last_chunk_size;
 
 	chunk_size = (*stacks)->size_a / nb_chunks;
 	last_chunk_size = (*stacks)->size_a - nb_chunks * chunk_size;

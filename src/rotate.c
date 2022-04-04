@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rotate.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 22:23:48 by lhumbert          #+#    #+#             */
+/*   Updated: 2022/04/04 22:24:10 by lhumbert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	rotate(t_node **stk)
 {
-	t_node *tmp;
+	t_node	*tmp;
 
 	if (!*stk)
 		return ;
@@ -16,8 +28,8 @@ void	rotate(t_node **stk)
 
 void	reverse(t_node **stk)
 {
-	t_node *tmp;
-	t_node *prev;
+	t_node	*tmp;
+	t_node	*prev;
 
 	if (!(*stk && (*stk)->next))
 		return ;

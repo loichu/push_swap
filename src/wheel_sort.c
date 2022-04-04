@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   wheel_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 22:21:58 by lhumbert          #+#    #+#             */
+/*   Updated: 2022/04/04 22:22:38 by lhumbert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	make_moves(t_stacks **stacks, t_node *best_node)
@@ -13,7 +25,7 @@ void	make_moves(t_stacks **stacks, t_node *best_node)
 int	get_move_a(int node_val, t_node *stack_a, int a_size)
 {
 	t_node	*prev;
-	int 	move;
+	int		move;
 
 	move = 0;
 	prev = node_last(stack_a);
@@ -30,8 +42,8 @@ int	get_move_a(int node_val, t_node *stack_a, int a_size)
 
 void	get_scores(t_stacks *stacks)
 {
-	int 	i;
-	t_node 	*node;
+	int		i;
+	t_node	*node;
 
 	node = stacks->b;
 	i = -1;

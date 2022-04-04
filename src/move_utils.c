@@ -1,6 +1,15 @@
-//
-// Created by Loic Humbert on 3/23/22.
-//
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   move_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/04 22:26:41 by lhumbert          #+#    #+#             */
+/*   Updated: 2022/04/04 22:28:41 by lhumbert         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	move_to_top(int index, int stack_size)
@@ -10,7 +19,7 @@ int	move_to_top(int index, int stack_size)
 	return (index);
 }
 
-int calc_score(t_node *node)
+int	calc_score(t_node *node)
 {
 	if (node->move_a * node->move_b > 0)
 		return (max(abs(node->move_a), abs(node->move_b)));
@@ -20,7 +29,7 @@ int calc_score(t_node *node)
 void	exec_rotates(t_stacks **stacks, char stack, int moves, bool chunk)
 {
 	char	*cmd;
-	int 	i;
+	int		i;
 
 	i = 0;
 	cmd = (char *)malloc(3 * sizeof(char));
@@ -42,7 +51,7 @@ void	exec_rotates(t_stacks **stacks, char stack, int moves, bool chunk)
 void	exec_rotates_together(t_stacks **stacks, t_node *best_node, bool chunk)
 {
 	char	*cmd;
-	int 	moves;
+	int		moves;
 
 	moves = min(abs(best_node->move_a), abs(best_node->move_b));
 	if (best_node->move_a > 0)
