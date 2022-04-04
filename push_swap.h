@@ -84,9 +84,6 @@ t_node	*node_last(t_node *stk);
 
 void	sort(t_stacks **stacks);
 
-// print_debug.c
-void    print_stack_chunks(t_list *chunks, t_node *stack_a);
-
 // utils.c
 bool	is_ordered(t_node *stk);
 

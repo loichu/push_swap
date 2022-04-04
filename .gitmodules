@@ -7,9 +7,6 @@
 [submodule "push_swap_tester"]
 	path = push_swap_tester
 	url = https://github.com/SimonCROS/push_swap_tester.git
-[submodule "leak_tester"]
-	path = leak_tester
-	url = https://github.com/LeoFu9487/push_swap_tester.git
 [submodule "lmalki_tester"]
 	path = lmalki_tester
 	url = https://github.com/lmalki-h/push_swap_tester.git

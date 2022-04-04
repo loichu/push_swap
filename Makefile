@@ -6,45 +6,88 @@
 #    By: lhumbert <marvin@42lausanne.ch>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/14 17:48:26 by lhumbert          #+#    #+#              #
-#    Updated: 2021/10/22 18:47:43 by lhumbert         ###   ########.fr        #
+#    Updated: 2022/04/04 21:56:02 by lhumbert         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME=push_swap
+################################################################################
+#                                     Config                                   #
+################################################################################
 
-CC=gcc
+NAME			= push_swap
+AUTHOR			= loichu
+DATE			= 04/04/2022
 
-CFLAGS = -Wall -Wextra -Werror -I.
-DEBUG_CFLAGS = -Wall -Wextra -Werror -g -fsanitize=address -I.
-LDFLAGS = -Llibft -lft
+SRCS = push.c rotate.c swap.c wheel_sort.c presort.c node.c math.c errors.c \
+		chunks.c analyze.c basic_sort.c move_utils.c utils.c
+MAIN = main.c
 
-SRCS = main.c push.c rotate.c swap.c wheel_sort.c presort.c node.c math.c errors.c chunks.c analyze.c basic_sort.c move_utils.c utils.c
-DEBUG_SRCS = print_debug.c
-MOCK_SRCS = mock_debug.c
+################################################################################
+#                                    Compile                                   #
+################################################################################
 
-OBJS = $(SRCS:.c=.o)
-DEBUG_OBJS = $(DEBUG_SRCS:.c=.o)
-MOCK_OBJS = $(MOCK_SRCS:.c=.o)
+SRCS_DIR	= src
+OBJS_DIR	= obj
+OBJS		= $(addprefix $(OBJS_DIR)/, ${SRCS:.c=.o})
+MAIN_OBJ	= $(addprefix $(OBJS_DIR)/, ${MAIN:.c=.o})
 
-RM = rm -f
+LIBFT		= libft.a
+LIBFT_DIR	= libft
 
-all:			$(NAME)
+CC			= gcc
+CFLAGS		= -Wall -Wextra -Werror -I . -I $(SRCS_DIR) -I $(LIBFT_DIR)
+DBG_FLAGS	= -g -fsanitize=address
 
-$(NAME):		$(OBJS) $(MOCK_OBJS)
-				gcc -o $(NAME) $(OBJS) $(MOCK_OBJS) $(CFLAGS) $(LDFLAGS)
+################################################################################
+#                                     Colors                                   #
+################################################################################
 
-ascii-viz:		$(OBJS) $(DEBUG_OBJS)
-				gcc -o $(NAME) $(OBJS) $(DEBUG_OBJS) $(CFLAGS) $(LDFLAGS)
+COM_COLOR   = \033[0;34m
+OBJ_COLOR   = \033[0;36m
+OK_COLOR    = \033[0;32m
+ERROR_COLOR = \033[0;31m
+WARN_COLOR  = \033[0;33m
+NO_COLOR    = \033[m
+
+################################################################################
+#                                      Rules                                   #
+################################################################################
+
+all:		header $(NAME)
+
+header:
+			@printf "%b" "$(OK_COLOR)"
+			@echo "$$(cat logo.ascii)"
+			@echo
+			@printf "%b" "$(OBJ_COLOR)Author:	$(WARN_COLOR)$(AUTHOR)\n"
+			@printf "%b" "$(OBJ_COLOR)Date: 	$(WARN_COLOR)$(DATE)\n\033[m"
+			@printf "%b" "$(OBJ_COLOR)CC: 	$(WARN_COLOR)$(CC)\n\033[m"
+			@printf "%b" "$(OBJ_COLOR)Flags: 	$(WARN_COLOR)$(CFLAGS)\n\033[m"
+			@echo
+
+$(NAME):		$(OBJS) $(MAIN_OBJ)
+				$(CC) $(OBJS) $(MAIN_OBJ) $(CFLAGS) $(LIBFT_DIR)/$(LIBFT) \
+					-o $(NAME)
+
+obj/%.o:		$(SRCS_DIR)/%.c $(LIBFT_DIR)/$(LIBFT)
+				@mkdir -p $(dir $@)
+				$(CC) $(CFLAGS) -c $< -o $@
 
 debug:			$(OBJS) $(MOCK_OBJS)
-				gcc -o $(NAME) $(OBJS) $(MOCK_OBJS) $(DEBUG_CFLAGS) $(LDFLAGS)
+				$(CC) $(OBJS) $(MAIN_OBJ) $(CFLAGS) $(DBG_FLAGS) \
+					$(LIBFT_DIR)/$(LIBFT) -o $(NAME)
 
 clean:
-				$(RM) $(OBJS) $(MOCK_OBJS) $(DEBUG_OBJS)
+				rm -rf $(OBJS) $(MAIN_OBJ)
 
 fclean:			clean
-				$(RM) $(NAME)
+				rm -rf $(NAME)
+				$(MAKE) -C $(LIBFT_DIR) fclean
 
-re:				fclean $(NAME)
+$(LIBFT_DIR)/$(LIBFT):
+				$(MAKE) -C $(LIBFT_DIR) all
+				$(MAKE) -C $(LIBFT_DIR) bonus
 
-.PHONY:			all clean fclean re bonus
+re:				fclean all
+
+.PHONY:			all clean fclean re header

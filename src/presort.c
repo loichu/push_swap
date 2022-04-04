@@ -66,7 +66,6 @@ t_list	*presort(t_stacks **stacks, int nb_chunks)
 	while ((*stacks)->size_a > 2)
 	{
 		scores(*stacks, chunks);
-		print_stack_chunks(chunks, (t_node *)(*stacks)->a);
 		moves(stacks, &chunks);
 		p_chunk(stacks, &chunks);
 	}
