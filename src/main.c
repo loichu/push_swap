@@ -30,6 +30,8 @@ t_stacks	*free_stacks(t_stacks *stacks)
 {
 	t_node	*freed;
 
+	if (!stacks)
+		return (NULL);
 	while (stacks->a)
 	{
 		freed = stacks->a;
@@ -74,15 +76,15 @@ t_stacks	*parse_args(int argc, char **argv)
 	char		**args;
 	t_stacks	*stacks;
 
-	if (argc == 2)
+	if (argc < 2)
+		return (NULL);
+	else if (argc == 2)
 		args = ft_split(argv[1], ' ');
 	else
 		args = &(argv[1]);
 	nb_args = 0;
 	while (args[nb_args])
 		nb_args++;
-	if (nb_args < 2)
-		exit(0);
 	stacks = init_stacks(args, nb_args);
 	if (argc == 2)
 	{
@@ -100,7 +102,7 @@ int	main(int argc, char **argv)
 	int			nb_chunks;
 
 	stacks = parse_args(argc, argv);
-	if (is_ordered(stacks->a))
+	if (!stacks || is_ordered(stacks->a))
 	{
 		stacks = free_stacks(stacks);
 		return (0);

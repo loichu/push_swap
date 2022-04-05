@@ -4,4 +4,5 @@ valgrind --leak-check=full \
          --track-origins=yes \
          --verbose \
          --log-file=valgrind-out.txt \
-         $@
+         $@ \
+         && tail valgrind-out.txt
