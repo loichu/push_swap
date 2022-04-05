@@ -14,13 +14,13 @@
 #                                     Config                                   #
 ################################################################################
 
-NAME			= push_swap
-AUTHOR			= loichu
-DATE			= 04/04/2022
+NAME		= push_swap
+AUTHOR		= loichu
+DATE		= 04/04/2022
 
-SRCS = push.c rotate.c swap.c wheel_sort.c presort.c node.c math.c errors.c \
-		chunks.c analyze.c basic_sort.c move_utils.c utils.c
-MAIN = main.c
+SRCS		= push.c rotate.c swap.c wheel_sort.c presort.c node.c math.c \
+					chunks.c analyze.c basic_sort.c move_utils.c utils.c
+MAIN		= main.c
 
 ################################################################################
 #                                    Compile                                   #
@@ -85,8 +85,9 @@ fclean:			clean
 				$(MAKE) -C $(LIBFT_DIR) fclean
 
 $(LIBFT_DIR)/$(LIBFT):
-				$(MAKE) -C $(LIBFT_DIR) all
-				$(MAKE) -C $(LIBFT_DIR) bonus
+				@echo "Compiling libft with bonuses"
+				@$(MAKE) -s -C $(LIBFT_DIR) bonus
+				@echo "Libft done compiling"
 
 re:				fclean all
 

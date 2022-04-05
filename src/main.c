@@ -100,6 +100,11 @@ int	main(int argc, char **argv)
 	int			nb_chunks;
 
 	stacks = parse_args(argc, argv);
+	if (is_ordered(stacks->a))
+	{
+		stacks = free_stacks(stacks);
+		return (0);
+	}
 	if (stacks->size_a < 6)
 	{
 		basic_sort(&stacks);

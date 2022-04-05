@@ -22,3 +22,9 @@ bool	is_ordered(t_node *stk)
 	}
 	return (true);
 }
+
+void	raise_error(int errcode)
+{
+	ft_putstr_fd("Error\n", 1);
+	exit(errcode);
+}
